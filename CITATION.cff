@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite it as below."
+title: "Code for: An unsupervised anomaly-based severity proxy for voice pathology assessment"
+type: software
+license: MIT
+version: 1.0.0
+authors:
+  - family-names: Keller
+    given-names: Johannes
+  - family-names: Engel
+    given-names: Christoph
+  - family-names: Schneider
+    given-names: Daniel
+  - family-names: Katalinic
+    given-names: Mika
+  - family-names: Fuchs
+    given-names: Michael
+  - family-names: Franke
+    given-names: Stefan
+  - family-names: Neumuth
+    given-names: Thomas
+  - family-names: Gaenzle
+    given-names: Maximilian

@@ -1,0 +1,6 @@
+torch
+torchaudio
+faster-whisper
+whisperx
+transformers
+rapidfuzz

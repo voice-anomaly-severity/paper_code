@@ -1,0 +1,9 @@
+torch
+torchaudio
+transformers
+numpy
+pandas
+scipy
+scikit-learn
+matplotlib
+openpyxl

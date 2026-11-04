@@ -1,0 +1,24 @@
+# data, models and results are never committed
+data/
+*.wav
+*.xlsx
+*.xls
+*.csv
+*.json
+*.pt
+*.pth
+*.pkl
+checkpoints/
+outputs/
+results/
+img/
+clips/
+runs/
+audio_img/
+clips/
+runs/
+# environments and caches
+.venv/
+venv/
+__pycache__/
+.cache/

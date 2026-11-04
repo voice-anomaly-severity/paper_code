@@ -1,0 +1,49 @@
+# Configuration of the statistical analyses (Tables 1–4, Supplementary Tables S4, S5, S8, S9).
+# All external dependencies live here. Paths starting with ./ or ../ are relative to this file;
+# other relative paths are resolved against `root`, which itself is relative to this file.
+# Override `root` without editing: environment variable VOICE_DATA_ROOT.
+
+paths:
+  root: ..                                      # data root (default: repository root); or set VOICE_DATA_ROOT
+  # Directory that contains the paper's `voice_ai` package (imported, never modified)
+  paper_code: .
+  # Word-level anomaly scores of the run behind the manuscript (teacher-student, epoch-30 checkpoint)
+  score_cache: img/ukl_wavs/paper/student_learner/simple/bright_green_moon/correlation_plots_number/evaluation_cache.json
+  # Recording-level GMM baseline scores of the run behind the manuscript
+  gmm_scores: img/ukl_wavs/paper/gmm/bright_sky_red/correlation_plots_number/patient_scores.csv
+  # Perceptual ratings (default input of the original loader ds/speech_util/metadata_handler.py)
+  rbh_csv: audio_img/speech/ICCAS_RBH_DATA_with_healthy_full.csv
+  rbh_csv_encoding: ISO-8859-1
+  # Clinical workbook: age, sex, MVI, MPD, recording date, identity columns
+  metadata_xlsx: Voice_KI_RBH_full.xlsx
+  # Output directory (created if missing)
+  output_dir: ./results
+
+data:
+  healthy_marker: Phon_GA            # substring of a recording ID that marks the healthy cohort
+  identity_columns: [Nachname, Vorname, Geburtsdatum]   # hashed in memory only, never written
+  date_column: Aufnahmedatum
+  targets:
+    MVI: Stimmstärke                 # maximum vocal intensity, dB(A)
+    MPD: Haltedauer                  # maximum phonation duration, s
+  extra_workbook_targets:
+    VHI: VHI                         # Voice Handicap Index (patient-reported; workbook column)
+
+analysis:
+  seed: 20261008
+  n_jobs: 40                         # parallel CPU workers (calibration-check replicates)
+  cluster_bootstrap_draws: 2000      # patient-level bootstrap for correlations and regressions
+  bayesian_bootstrap_draws: 10000    # Dirichlet(1) draws over patients for delta elpd
+  age_strata: [0, 45, 65, 200]       # [lower, upper) boundaries in years
+  overlap_band: [27, 32]             # age band for cohort-overlap counts (years)
+  table4:
+    targets: [MVI, MPD, VHI, H, R, B]   # perceptual targets (R, B, H) are predicted from score, sex and age only
+  gp:                                # secondary Table 4 model: Methods kernel + patient effect, MAP
+    devices: ["cuda:0", "cuda:1"]    # among CUDA_VISIBLE_DEVICES; one worker per device; CPU if no GPU
+    restarts: 1
+    steps: 1500
+    lr: 0.05
+    jitter: 1.0e-6
+  calibration_check:
+    lmm_replicates: 1000
+    gp_replicates: 20
