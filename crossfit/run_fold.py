@@ -8,7 +8,7 @@ and covariance are estimated on the training words only.
     python run_fold.py ... --fold -1                          # all healthy speakers (setup of the main model)
     python run_fold.py ... --fold -1 --checkpoint <epoch-30>  # score with an existing checkpoint, no training
 
-Clip names are <recording>__<index>_<word>.wav (segmentation/extract_number_words_w2v2.py). Healthy recordings
+Clip names are <recording>_<word>_<index>.wav (segmentation/extract_number_words.py). Healthy recordings
 are those whose name starts with Phon_GA; their speakers are identified by a hash of the identity columns of the
 clinical workbook, computed in memory only. Writes runs/scores_p<partition>_fold<fold>.csv (one row per clip).
 """
@@ -37,7 +37,9 @@ HEALTHY_MARKER = 'Phon_GA'
 
 
 def rec_of(path):
-    return os.path.basename(path).split('__')[0]
+    """Recording ID of a clip: <recording>_<word>_<index>.wav (also accepts <recording>__<index>_<word>.wav)."""
+    name = os.path.basename(path)[:-4]
+    return name.split('__')[0] if '__' in name else name.rsplit('_', 2)[0]
 
 
 def main():

@@ -3,7 +3,7 @@ message: "If you use this code, please cite it as below."
 title: "Code for: An unsupervised anomaly-based severity proxy for voice pathology assessment"
 type: software
 license: MIT
-version: 1.0.0
+version: 1.0.1
 authors:
   - family-names: Keller
     given-names: Johannes
@@ -19,5 +19,5 @@ authors:
     given-names: Stefan
   - family-names: Neumuth
     given-names: Thomas
-  - family-names: Gaenzle
+  - family-names: Gänzle
     given-names: Maximilian
